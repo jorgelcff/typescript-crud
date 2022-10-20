@@ -1,8 +1,8 @@
-import { AxiosError } from "axios";
-import { ValidationError } from "class-validator";
+import { AxiosError } from 'axios';
+import { ValidationError } from 'class-validator';
 
 interface IProps {
-  error: AxiosError;
+  error: AxiosError<any>;
 }
 
 export const RecordError: React.FC<IProps> = ({ error }) => {
@@ -15,7 +15,7 @@ export const RecordError: React.FC<IProps> = ({ error }) => {
         <b>Message:</b> {error.message}
       </div>
       <div>
-        <b>URL:</b> {error.config.url}
+        <b>URL:</b> {error.config?.url}
       </div>
       {error.response?.data.message && (
         <div>
@@ -26,11 +26,11 @@ export const RecordError: React.FC<IProps> = ({ error }) => {
         validationErrors.map((error, errorKey) => (
           <ul key={errorKey}>
             {error.constraints &&
-              Object.values(error.constraints).map(
-                (constraint, constraintKey) => (
-                  <li key={constraintKey}>{constraint}</li>
-                )
-              )}
+              Object.values(
+                error.constraints
+              ).map((constraint, constraintKey) => (
+                <li key={constraintKey}>{constraint}</li>
+              ))}
           </ul>
         ))}
     </div>
